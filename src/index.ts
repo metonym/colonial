@@ -23,21 +23,6 @@ const toProperty = (fragment: string) => {
   }
 
   return part.join('');
-  /* 
-  console.log(part);
-
-  return split
-    .map((item, i) => {
-      if (i === 0) {
-        return item;
-      }
-
-      const s = item.split('');
-      s[0] = s[0].toUpperCase();
-
-      return s.join('');
-    })
-    .join(''); */
 };
 
 // TODO: add guaranteed type
