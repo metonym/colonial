@@ -42,15 +42,12 @@ const toObject = (text: string) => {
 
   const cssRules: CSSRules = {};
 
-  text
-    .split('\n')
-    .filter(i => i.trim().length)
-    .forEach(item => {
-      const [left, right] = item.split(':');
-      const property = toProperty(left).trim();
-      const value = right.replace(';', '').trim();
-      cssRules[property as any] = value;
-    });
+  fragments.forEach(item => {
+    const [left, right] = item.split(':');
+    const property = toProperty(left).trim();
+    const value = right.replace(';', '').trim();
+    cssRules[property as any] = value;
+  });
 
   const key = generateKey();
   const obj: IObject = { key, rule: { [key]: cssRules } };
