@@ -43,10 +43,8 @@ const toObject = (text: string) => {
   fragments
     .map(i => i.replace(/\s+|;/g, ''))
     .forEach(item => {
-      const [left, right] = item.split(':');
-      const property = toProperty(left);
-      const value = right;
-      cssRules[property] = value;
+      const [left, value] = item.split(':');
+      cssRules[toProperty(left)] = value;
     });
 
   const key = generateKey();
