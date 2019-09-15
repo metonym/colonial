@@ -27,16 +27,17 @@ const toProperty = (fragment: string) => {
     .join('');
 };
 
+// TODO: add guaranteed type
+interface IObject {
+  key: undefined | string;
+  rule: {} | IStyleSheetRule;
+}
+
 const toObject = (text: string) => {
   const fragments = text.split('\n').filter(i => i.trim().length);
 
-  const obj: { key: undefined | string; rule: {} | IStyleSheetRule } = {
-    key: undefined,
-    rule: {}
-  };
-
   if (fragments.length === 0) {
-    return obj;
+    return { key: undefined, rule: {} };
   }
 
   const cssRules: CSSRules = {};
@@ -51,12 +52,8 @@ const toObject = (text: string) => {
       cssRules[property as any] = value;
     });
 
-  // TODO: generate key
-  const key = `_${rules.length}`;
-
-  // TODO: append prefix
-  obj.key = `_${rules.length}`;
-  obj.rule = { [key]: cssRules };
+  const key = generateKey();
+  const obj: IObject = { key, rule: { [key]: cssRules } };
 
   return obj;
 };
@@ -68,8 +65,8 @@ interface IRulesByIndex {
 const rules: IStyleSheetRule[] = [];
 const rulesByIndex: IRulesByIndex = {};
 
-const createRule = (text: string) => {
-  const obj = toObject(text);
+const createRule = (prop: string | IObject) => {
+  const obj = typeof prop === 'string' ? toObject(prop) : prop;
 
   if (obj.key) {
     rules.push(obj.rule);
@@ -77,6 +74,13 @@ const createRule = (text: string) => {
   }
 
   return obj;
+};
+
+const generateKey = () => {
+  // TODO: prefix
+  const key = `_${rules.length}`;
+
+  return key;
 };
 
 type Css = (args: TemplateStringsArray) => undefined | string;
@@ -95,25 +99,10 @@ const style: Style = args => {
     return {};
   }
 
-  const obj: { key: undefined | string; rule: {} | IStyleSheetRule } = {
-    key: undefined,
-    rule: {}
-  };
-  // TODO: Reuse create key
+  const key = generateKey();
+  const obj: IObject = { key, rule: { [key]: args } };
 
-  // TODO: generate key
-  const key = `_${rules.length}`;
-
-  // TODO: append prefix
-  obj.key = `_${rules.length}`;
-  obj.rule = { [key]: args };
-
-  // if (obj.key) {
-  rules.push(obj.rule);
-  rulesByIndex[obj.key] = rules.length;
-  // }
-
-  return obj.rule;
+  return createRule(obj).rule;
 };
 
 const sheet = () => rules;
