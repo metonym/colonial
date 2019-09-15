@@ -19,6 +19,7 @@ describe('colonial', () => {
       css`
         color: red;
         background-color: blue;
+        border-bottom-width: 4px;
       `
     ).toEqual(expect.any(String));
     expect(sheet().length).toEqual(2);

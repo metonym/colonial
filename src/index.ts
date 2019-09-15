@@ -13,6 +13,19 @@ const toProperty = (fragment: string) => {
     return fragment;
   }
 
+  const part: string[] = [split[0]];
+
+  for (let i = 1, len = split.length; i < len; ) {
+    const s = split[i].split('');
+    s[0] = s[0].toUpperCase();
+    part.push(s.join(''));
+    i += 1;
+  }
+
+  return part.join('');
+  /* 
+  console.log(part);
+
   return split
     .map((item, i) => {
       if (i === 0) {
@@ -24,7 +37,7 @@ const toProperty = (fragment: string) => {
 
       return s.join('');
     })
-    .join('');
+    .join(''); */
 };
 
 // TODO: add guaranteed type
@@ -40,14 +53,16 @@ const toObject = (text: string) => {
     return { key: undefined, rule: {} };
   }
 
-  const cssRules: CSSRules = {};
+  const cssRules: IStyleSheetRule = {};
 
-  fragments.forEach(item => {
-    const [left, right] = item.split(':');
-    const property = toProperty(left).trim();
-    const value = right.replace(';', '').trim();
-    cssRules[property as any] = value;
-  });
+  fragments
+    .map(i => i.replace(/\s+|;/g, ''))
+    .forEach(item => {
+      const [left, right] = item.split(':');
+      const property = toProperty(left);
+      const value = right;
+      cssRules[property] = value;
+    });
 
   const key = generateKey();
   const obj: IObject = { key, rule: { [key]: cssRules } };

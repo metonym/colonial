@@ -10,6 +10,7 @@ Array [
   Object {
     "_1": Object {
       "backgroundColor": "blue",
+      "borderBottomWidth": "4px",
       "color": "red",
     },
   },
