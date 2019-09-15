@@ -15,17 +15,15 @@ const toProperty = (fragment: string) => {
 
   const part: string[] = [split[0]];
 
-  for (let i = 1, len = split.length; i < len; ) {
+  for (let i = 1, len = split.length; i < len; i++) {
     const s = split[i].split('');
     s[0] = s[0].toUpperCase();
     part.push(s.join(''));
-    i += 1;
   }
 
   return part.join('');
 };
 
-// TODO: add guaranteed type
 interface IObject {
   key: undefined | string;
   rule: {} | IStyleSheetRule;
