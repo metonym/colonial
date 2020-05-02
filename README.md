@@ -2,7 +2,6 @@
 
 [![NPM][npm]][npm-url]
 [![Build][build]][build-badge]
-[![Coverage][codecov-shield]][codecov]
 
 > Old fashioned CSS-in-JS.
 
@@ -19,14 +18,14 @@ Pass a template string literal to the `css` function.
 Pass an object to the `style` function.
 
 ```js
-import { css, style } from 'colonial';
+import { css, style } from "colonial";
 
 const h1 = css`
   font-size: 2rem;
 `;
 
 const h2 = style({
-  fontSize: '1.5rem'
+  fontSize: "1.5rem",
 });
 ```
 
@@ -38,5 +37,3 @@ const h2 = style({
 [npm-url]: https://npmjs.com/package/colonial
 [build]: https://travis-ci.com/metonym/colonial.svg?branch=master
 [build-badge]: https://travis-ci.com/metonym/colonial
-[codecov]: https://codecov.io/gh/metonym/colonial
-[codecov-shield]: https://img.shields.io/codecov/c/github/metonym/colonial.svg
