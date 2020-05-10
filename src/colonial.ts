@@ -7,7 +7,7 @@ interface IStyleSheetRule {
 }
 
 const toProperty = (fragment: string) => {
-  const split = fragment.split('-');
+  const split = fragment.split("-");
 
   if (split.length <= 1) {
     return fragment;
@@ -16,12 +16,12 @@ const toProperty = (fragment: string) => {
   const part: string[] = [split[0]];
 
   for (let i = 1, len = split.length; i < len; i++) {
-    const s = split[i].split('');
+    const s = split[i].split("");
     s[0] = s[0].toUpperCase();
-    part.push(s.join(''));
+    part.push(s.join(""));
   }
 
-  return part.join('');
+  return part.join("");
 };
 
 interface IObject {
@@ -30,7 +30,7 @@ interface IObject {
 }
 
 const toObject = (text: string) => {
-  const fragments = text.split('\n').filter(i => i.trim().length);
+  const fragments = text.split("\n").filter((i) => i.trim().length);
 
   if (fragments.length === 0) {
     return { key: undefined, rule: {} };
@@ -39,9 +39,9 @@ const toObject = (text: string) => {
   const cssRules: IStyleSheetRule = {};
 
   fragments
-    .map(i => i.replace(/\s+|;/g, ''))
-    .forEach(item => {
-      const [left, value] = item.split(':');
+    .map((i) => i.replace(/\s+|;/g, ""))
+    .forEach((item) => {
+      const [left, value] = item.split(":");
       cssRules[toProperty(left)] = value;
     });
 
@@ -59,7 +59,7 @@ const rules: IStyleSheetRule[] = [];
 const rulesByIndex: IRulesByIndex = {};
 
 const createRule = (prop: string | IObject) => {
-  const obj = typeof prop === 'string' ? toObject(prop) : prop;
+  const obj = typeof prop === "string" ? toObject(prop) : prop;
 
   if (obj.key) {
     rules.push(obj.rule);
@@ -71,7 +71,7 @@ const createRule = (prop: string | IObject) => {
 
 const generateKey = () => {
   // TODO: prefix
-  const key = `_${rules.length}`;
+  const key = `c_${rules.length}`;
 
   return key;
 };
@@ -79,7 +79,7 @@ const generateKey = () => {
 type Css = (args: TemplateStringsArray) => undefined | string;
 type Style = (args: CSSRules) => IStyleSheetRule;
 
-const css: Css = args => {
+const css: Css = (args) => {
   if (Array.isArray(args)) {
     return createRule(args[0]).key;
   }
@@ -87,7 +87,7 @@ const css: Css = args => {
   return undefined;
 };
 
-const style: Style = args => {
+const style: Style = (args) => {
   if (Object.keys(args).length === 0) {
     return {};
   }

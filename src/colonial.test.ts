@@ -8,29 +8,26 @@ test.deepEqual(
   css`
     color: red;
   `,
-  "_0"
+  "c_0"
 );
 
 test.equal(sheet().length, 1);
-
 test.equal(
   css`
     color: red;
     background-color: blue;
     border-bottom-width: 4px;
   `,
-  "_1"
+  "c_1"
 );
-
 test.equal(sheet().length, 2);
-
 test.deepEqual(
   style({
     color: "red",
     backgroundColor: "blue",
   }),
   {
-    _2: {
+    c_2: {
       backgroundColor: "blue",
       color: "red",
     },
